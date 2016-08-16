@@ -1,2 +1,2 @@
 include COPYING.txt
-recursive-include webserver *.html *.jpg *.txt
+recursive-include web_server *.html *.jpg *.txt

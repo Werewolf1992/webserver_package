@@ -8,18 +8,25 @@ import getopt
 # import argparse
 from io import StringIO
 from mimetypes import guess_type
-import config
+from config import server_host
+from config import server_location
+from config import server_port
+from config import default_home
+from config import default_file
 import traceback
 
 REQUEST_QUEUE_SIZE = 1024
 
 config_dict = {
-    'server_host': config.server_host,
-    'server_location': config.server_location,
-    'server_port': config.server_port,
-    'default_home': config.default_home,
-    'default_file': config.default_file
+    'server_host': server_host,
+    'server_location': server_location,
+    'server_port': server_port,
+    'default_home': default_home,
+    'default_file': default_file
 }
+
+def webserver_start():
+    serve_forever(sys.argv[1:])
 
 def serve_forever(argv):
     # try:
@@ -105,7 +112,6 @@ def serve_forever(argv):
             os._exit(0)
         else:  # parent
             client_connection.close()  # close parent copy and loop over
-
 
 def grim_reaper(signum, frame):
     while True:
@@ -200,4 +206,4 @@ def setup_grafecul_signal_handler():
     signal.signal(signal.SIGHUP, signal.SIG_IGN)
 
 if __name__ == '__main__':
-    serve_forever(sys.argv[1:])
+    webserver_start()
